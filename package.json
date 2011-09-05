@@ -1,0 +1,10 @@
+{
+    "name": "protobuf-stream"
+  , "version": "0.0.1"
+  , "description": "Adds simple message streaming functionality to node version of protobuf module."
+  , "keywords": ["protobuf", "messaging"]
+  , "author": "Dawid Fatyga <dawid.fatyga@gmail.com>"
+  , "dependencies": {"protobuf"}
+  , "main": "index"
+  , "engines": { "node": "0.5.5" }
+}
