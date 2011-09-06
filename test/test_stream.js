@@ -10,13 +10,13 @@ var EventEmitter = require('events').EventEmitter;
 var Stream = require('stream').Stream;
 var Buffer = require('buffer').Buffer;
 
-var mock = require('../lib/minimock').mock;
-var verify = require('../lib/minimock').verify;
+var mock = require(__dirname + '/../lib/minimock').mock;
+var verify = require(__dirname + '/../lib/minimock').verify;
 
 // Load schema
 var fs = require('fs');
 var Schema = require('protobuf').Schema;
-var TestSchema = new Schema(fs.readFileSync('./test.desc'));
+var TestSchema = new Schema(fs.readFileSync(__dirname + '/test.desc'));
 var TestMessage = TestSchema['node_protobuf_stream.TestMessage'];
 
 // Small utility class
