@@ -1,0 +1,5 @@
+package hello;
+
+message TestMessage {
+	optional string hello = 1;
+}
