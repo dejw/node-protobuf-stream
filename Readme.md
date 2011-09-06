@@ -90,6 +90,15 @@ Desired output:
     { hello: 'World!' }
     { hello: 'Space!' }
 
+## Tests
+
+Before running tests you have to install `nodeunit` and `underscore` libraries.
+
+To run test simply type:
+
+    make test
+
+
 ## License 
 
 (The MIT License)
