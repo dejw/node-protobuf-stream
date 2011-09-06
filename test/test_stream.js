@@ -6,9 +6,12 @@ var util = require('util');
 var inspect = util.inspect;
 var assert = require('assert');
 
-var EventEmitter = require('events').EventEmitter;
 var Stream = require('stream').Stream;
 var Buffer = require('buffer').Buffer;
+
+// Helpers
+var Pipe = require('./helper').Pipe;
+var BufferedPipe = require('./helper').BufferedPipe;
 
 var mock = require(__dirname + '/../lib/minimock').mock;
 var verify = require(__dirname + '/../lib/minimock').verify;
@@ -19,33 +22,6 @@ var Schema = require('protobuf').Schema;
 var TestSchema = new Schema(fs.readFileSync(__dirname + '/test.desc'));
 var TestMessage = TestSchema['node_protobuf_stream.TestMessage'];
 
-// Small utility class
-var Pipe = function(){ EventEmitter.call(this); }
-util.inherits(Pipe, EventEmitter);
-
-Pipe.prototype.write = function(buffer){
-	this.emit('data', buffer);
-}
-
-var BufferedPipe = function(){ 
-	EventEmitter.call(this); 
-	this.buffer = new Buffer(0);
-}
-util.inherits(BufferedPipe, EventEmitter);
-
-BufferedPipe.prototype.write = function(data){
-	var newBuffer = new Buffer(this.buffer.length + data.length);
-
-    this.buffer.copy(newBuffer, 0, 0, this.buffer.length);
-    data.copy(newBuffer, this.buffer.length, 0, data.length);
-
-    this.buffer = newBuffer;
-}
-
-BufferedPipe.prototype.flush = function(){
-	this.emit('data', this.buffer);
-	this.buffer = new Buffer(0);
-}
 
 exports.shouldCreateStreamInstance = function(test){
 	// given
