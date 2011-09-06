@@ -27,24 +27,26 @@ Protocol compilation:
 
 Contents of `server.js`:
 
-    var net = require('net');
-    var protostream = require('protobuf-stream');
+~~~~~ javascript
+var net = require('net');
+var protostream = require('protobuf-stream');
 
-    // Load schema
-    var fs = require('fs');
-    var Schema = require('protobuf').Schema;
-    var TestSchema = new Schema(fs.readFileSync('test.desc'));
-    var TestMessage = TestSchema['hello.TestMessage'];
+// Load schema
+var fs = require('fs');
+var Schema = require('protobuf').Schema;
+var TestSchema = new Schema(fs.readFileSync('test.desc'));
+var TestMessage = TestSchema['hello.TestMessage'];
 
-    var server = net.createServer(function(connection){
-        var transport = new protostream.Stream(TestMessage, connection);
-        transport.on('message', function(message){
-            console.log(message);
-        });
+var server = net.createServer(function(connection){
+    var transport = new protostream.Stream(TestMessage, connection);
+    transport.on('message', function(message){
+        console.log(message);
     });
+});
 
-    console.log("Listening on port 1234...");
-    server.listen(1234, 'localhost');
+console.log("Listening on port 1234...");
+server.listen(1234, 'localhost');
+~~~~~
 
 Generate Python code:
 
@@ -52,27 +54,29 @@ Generate Python code:
 
 Contents of `client.py`:
 
-    #!/usr/bin/env python
-    # -*- coding: utf-8 -*-
+~~~~~ python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-    from test_pb2 import TestMessage
-    import socket
-    import struct
+from test_pb2 import TestMessage
+import socket
+import struct
 
-    def send(stream, message):
-        serialized = message.SerializeToString()
-        stream.send(struct.pack('!h', len(serialized)))
-        stream.send(serialized)
+def send(stream, message):
+    serialized = message.SerializeToString()
+    stream.send(struct.pack('!h', len(serialized)))
+    stream.send(serialized)
 
-    message = TestMessage()
-    message.hello = "World!"
+message = TestMessage()
+message.hello = "World!"
 
-    stream = socket.create_connection(('localhost', 1234))
-    send(stream, message)
-    send(stream, message)
+stream = socket.create_connection(('localhost', 1234))
+send(stream, message)
+send(stream, message)
 
-    message.hello = "Space!"
-    send(stream, message)
+message.hello = "Space!"
+send(stream, message)
+~~~~~
 
 Start:
 
