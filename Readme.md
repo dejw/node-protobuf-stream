@@ -9,7 +9,7 @@ It works with node 0.5.5 since latest `node-protobuf` works with that version.
 
 Install `node-protobuf` from instructions given at https://github.com/dejw/node-protobuf, and simply type:
 
-    npm install node-protobuf-stream
+    npm install protobuf-stream
 
 ## Usage
 
