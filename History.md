@@ -3,3 +3,7 @@
 ==================
 
   * Initial release
+
+0.0.2 / 2016-02-02
+==================
+ * Support of protobufjs
