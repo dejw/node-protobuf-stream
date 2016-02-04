@@ -6,5 +6,5 @@
   , "author": "Dawid Fatyga <dawid.fatyga@gmail.com>"
   , "dependencies": {}
   , "main": "index"
-  , "engines": { "node": "0.5.5" }
+  , "engines": { "node": ">=0.5.5" }
 }
