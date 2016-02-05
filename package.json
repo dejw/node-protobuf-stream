@@ -6,7 +6,6 @@
     "author": "Dawid Fatyga <dawid.fatyga@gmail.com>",
     "dependencies": {},
     "main": "index",
-    "engines": { "node": "0.5.5" },
     "repository": {
       "type": "git",
       "url": "https://github.com/spotware/node-protobuf-stream.git"
