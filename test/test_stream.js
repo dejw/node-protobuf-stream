@@ -1,4 +1,4 @@
-var ps = require('protobuf-stream');
+var ps = require('../index');
 
 var _ = require('underscore');
 
@@ -6,15 +6,16 @@ var util = require('util');
 var inspect = util.inspect;
 var assert = require('assert');
 
-var Stream = require('stream').Stream;
+var Stream = require('stream');
 var Buffer = require('buffer').Buffer;
 
 // Helpers
 var Pipe = require('./helper').Pipe;
 var BufferedPipe = require('./helper').BufferedPipe;
 
-var mock = require(__dirname + '/../lib/minimock').mock;
-var verify = require(__dirname + '/../lib/minimock').verify;
+var minimock = require('../lib/minimock');
+var mock = minimock.mock;
+var verify = minimock.verify;
 
 // Load schema
 var fs = require('fs');
@@ -27,7 +28,10 @@ exports.shouldCreateStreamInstance = function(test){
 	// given
 
 	// when
-	var stream = new ps.Stream(null, new Stream());
+	var stream = new ps.Stream({
+		stream: new Stream(),
+		length_field_bytes: 2
+	});
 
 	// then
 	test.notEqual(stream, null);
@@ -38,7 +42,10 @@ exports.shouldSendRawMessage = function(test){
 	// given
 	var message = new Buffer('Hello');
 	var dataStream = mock('write', 'on');
-	var stream = new ps.Stream(null, dataStream, 4);
+	var stream = new ps.Stream({
+		stream: dataStream,
+		length_field_bytes: 4
+	});
 
 	// when
 	stream.send(message);
@@ -54,14 +61,13 @@ exports.shouldValidateLengthBytesArgument = function(test){
 	// given
 	var message = new Buffer('Hello');
 	var dataStream = mock('write', 'on');
-	var stream = new ps.Stream(null, dataStream, 20);
-
-	// when
-	test.throws(function(){
-		stream.send(message);
+	test.throws(function () {
+		var stream = new ps.Stream({
+			stream: dataStream,
+			length_field_bytes: 20
+		});
 	});
-	
-	// then
+
 	test.done();
 };
 
@@ -70,7 +76,11 @@ exports.shouldReceiveMessage = function(test){
 	var message = {'hello' : 'World'};
 	var dataStream = new Pipe();
 
-	var stream = new ps.Stream(TestMessage, dataStream);
+	var stream = new ps.Stream({
+		message: TestMessage,
+		stream: dataStream,
+		length_field_bytes: 2
+	});
 	stream.on('message', function(parsed_message){
 		test.equal(inspect(parsed_message), inspect(message));
 	});
@@ -80,15 +90,19 @@ exports.shouldReceiveMessage = function(test){
 
 	// then
 	test.done();
-}
+};
 
 exports.shouldParseStream = function(test){
-	// given	
+	// given
 	var messages = [];
 	var messages_to_send = [{'hello' : 'World'}, {'hello' : 'Space'}];
 	var dataStream = new BufferedPipe();
 
-	var stream = new ps.Stream(TestMessage, dataStream);	
+	var stream = new ps.Stream({
+		message: TestMessage,
+		stream: dataStream,
+		length_field_bytes: 2
+	});
 	stream.on('message', function(parsed_message){
 		messages.push(parsed_message);
 	});
@@ -101,8 +115,8 @@ exports.shouldParseStream = function(test){
 
 	// then
 	for(var i in messages){
-		test.equal(inspect(messages[i]), inspect(messages_to_send[i]));	
-	};
-	
+		test.equal(inspect(messages[i]), inspect(messages_to_send[i]));
+	}
+
 	test.done();
-}
+};
