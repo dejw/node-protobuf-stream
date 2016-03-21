@@ -1,7 +1,7 @@
 
 test:
 	@protoc test/test.proto -o test/test.desc
-	@nodeunit test/test_*.js
+	@npm test
 
 clean:
 	@rm -f test/test.desc

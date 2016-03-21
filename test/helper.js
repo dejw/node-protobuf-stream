@@ -6,18 +6,18 @@ var EventEmitter = require('events').EventEmitter;
 var Buffer = require('buffer').Buffer;
 
 // Small utility class
-var Pipe = function(){ EventEmitter.call(this); }
+var Pipe = function(){ EventEmitter.call(this); };
 util.inherits(Pipe, EventEmitter);
 
 Pipe.prototype.write = function(buffer){
 	this.emit('data', buffer);
-}
+};
 
 // Pipe with buffering
-var BufferedPipe = function(){ 
-	Pipe.call(this); 
+var BufferedPipe = function(){
+	Pipe.call(this);
 	this.buffer = new Buffer(0);
-}
+};
 util.inherits(BufferedPipe, Pipe);
 
 BufferedPipe.prototype.write = function(data){
@@ -27,12 +27,12 @@ BufferedPipe.prototype.write = function(data){
     data.copy(newBuffer, this.buffer.length, 0, data.length);
 
     this.buffer = newBuffer;
-}
+};
 
 BufferedPipe.prototype.flush = function(){
 	this.emit('data', this.buffer);
 	this.buffer = new Buffer(0);
-}
+};
 
 exports.Pipe = Pipe;
 exports.BufferedPipe = BufferedPipe;

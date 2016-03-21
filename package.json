@@ -1,21 +1,30 @@
 {
-    "name": "protobuf-stream",
-    "version": "0.0.2",
-    "description": "Adds simple message streaming functionality to node version of protobuf module.",
-    "author": "Dawid Fatyga <dawid.fatyga@gmail.com>",
-    "main": "./index.js",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/spotware/node-protobuf-stream.git"
-    },
-    "keywords": [
-        "google",
-        "protobuf",
-        "messaging"
-    ],
-    "dependencies": {},
-    "license" : "MIT",
-    "engines": {
-      "node": ">=0.8"
-    }
+  "name": "protobuf-stream",
+  "version": "0.0.3",
+  "description": "Adds simple message streaming functionality to node version of protobuf module.",
+  "author": "Dawid Fatyga <dawid.fatyga@gmail.com>",
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spotware/node-protobuf-stream.git"
+  },
+  "keywords": [
+    "google",
+    "protobuf",
+    "messaging"
+  ],
+  "scripts": {
+    "test": "nodeunit test/test_*.js"
+  },
+  "dependencies": {},
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.8"
+  },
+  "devDependencies": {
+    "nodeunit": "0.9.1",
+    "protobuf": "0.11.0",
+    "stream": "0.0.2",
+    "underscore": "1.8.3"
+  }
 }
