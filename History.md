@@ -3,3 +3,9 @@
 ==================
 
   * Initial release
+
+0.0.2 / 2016-03-21
+==================
+ * Cache read/write functions
+ * Improve tests setup
+ 
