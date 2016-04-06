@@ -4,6 +4,8 @@
 
   * Initial release
 
-0.0.2 / 2016-02-02
+0.0.2 / 2016-03-21
 ==================
- * Support of protobufjs
+ * Cache read/write functions
+ * Improve tests setup
+ 

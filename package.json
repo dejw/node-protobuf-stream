@@ -1,6 +1,6 @@
 {
   "name": "protobuf-stream",
-  "version": "0.0.3",
+  "version": "0.0.2",
   "description": "Adds simple message streaming functionality to node version of protobuf module.",
   "author": "Dawid Fatyga <dawid.fatyga@gmail.com>",
   "main": "./index.js",
